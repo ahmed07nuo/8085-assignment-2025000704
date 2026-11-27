@@ -1,0 +1,31 @@
+; ------------------------------------------------------------
+; Name: Ahmed Hussien Ahmed Salem
+; Student ID: 2025000704
+; Section: 7
+; Question: Q3 - Count Even and Odd Numbers
+; File: q3_even_odd.asm
+; ------------------------------------------------------------
+; An array of N unsigned 8-bit numbers starts at 2501H and
+; its length N is stored at 2500H. The program counts the
+; even and the odd elements and stores the even count at
+; 2600H and the odd count at 2601H.
+; ------------------------------------------------------------
+
+        LXI  H, 2500H   ; HL = 2500H : address of the array length
+        MOV  B, M       ; B  = N : number of elements left to test
+        MVI  C, 00H     ; C  = even counter
+        MVI  D, 00H     ; D  = odd counter
+LOOP:   INX  H          ; HL = address of the next element
+        MOV  A, M       ; A  = current element
+        ANI  01H        ; keep only bit 0 (the parity bit)
+        JZ   EVEN       ; bit 0 = 0 : the element is even
+        INR  D          ; bit 0 = 1 : the element is odd
+        JMP  NEXT
+EVEN:   INR  C          ; even counter = even counter + 1
+NEXT:   DCR  B          ; one element has been checked
+        JNZ  LOOP       ; repeat until all N elements are counted
+        LXI  H, 2600H   ; HL = 2600H : address of the even count
+        MOV  M, C       ; store the even count at 2600H
+        INX  H          ; HL = 2601H
+        MOV  M, D       ; store the odd count at 2601H
+        HLT             ; end of program

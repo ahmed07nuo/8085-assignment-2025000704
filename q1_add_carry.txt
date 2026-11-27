@@ -1,0 +1,24 @@
+; ------------------------------------------------------------
+; Name: Ahmed Hussien Ahmed Salem
+; Student ID: 2025000704
+; Section: 7
+; Question: Q1 - 8-Bit Addition with Carry
+; File: q1_add_carry.asm
+; ------------------------------------------------------------
+; Reads two 8-bit unsigned numbers from 2500H and 2501H,
+; adds them and stores the 8-bit sum at 2502H and the carry
+; at 2503H (00H = no carry, 01H = carry out of bit 7).
+; ------------------------------------------------------------
+
+        LXI  H, 2500H   ; HL = 2500H : address of the first operand
+        MOV  A, M       ; A  = first operand
+        INX  H          ; HL = 2501H
+        ADD  M          ; A  = A + second operand, CY = carry out
+        INX  H          ; HL = 2502H
+        MOV  M, A       ; store the 8-bit sum at 2502H
+        MVI  A, 00H     ; assume no carry (MVI does not change flags)
+        JNC  STORE      ; CY = 0 : carry stays 00H
+        MVI  A, 01H     ; CY = 1 : carry is 01H
+STORE:  INX  H          ; HL = 2503H
+        MOV  M, A       ; store the carry at 2503H
+        HLT             ; end of program

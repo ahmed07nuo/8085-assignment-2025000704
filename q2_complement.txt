@@ -1,0 +1,20 @@
+; ------------------------------------------------------------
+; Name: Ahmed Hussien Ahmed Salem
+; Student ID: 2025000704
+; Section: 7
+; Question: Q2 - 1's and 2's Complement
+; File: q2_complement.asm
+; ------------------------------------------------------------
+; Reads an 8-bit number from 2500H and stores its 1's
+; complement at 2501H and its 2's complement at 2502H.
+; ------------------------------------------------------------
+
+        LXI  H, 2500H   ; HL = 2500H : address of the input number
+        MOV  A, M       ; A  = input number
+        CMA             ; A  = 1's complement (every bit inverted)
+        INX  H          ; HL = 2501H
+        MOV  M, A       ; store the 1's complement at 2501H
+        ADI  01H        ; A  = 1's complement + 1 = 2's complement
+        INX  H          ; HL = 2502H
+        MOV  M, A       ; store the 2's complement at 2502H
+        HLT             ; end of program
